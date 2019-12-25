@@ -1,0 +1,67 @@
+/* body {
+  margin: 40px 10px;
+  padding: 0;
+  font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+  font-size: 14px;
+} */
+
+#calendar {
+  width: 850px;
+  margin: 0 auto;
+}
+
+/*直接在html覆蓋css的,對應上下個月的設定*/
+#prev {
+  visibility: hidden;
+}
+#next {
+  visibility: visible;
+}
+/*隱藏旁邊選擇月與週功能(不能disable，會跑版)*/
+.fc-month-button,
+.fc-basicWeek-button {
+  visibility: hidden;
+}
+.fc-content
+{
+	color:white;
+}
+
+#json1 {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+#json2 {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+}
+#json3 {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+}
+#xButton {
+  position: absolute;
+  margin-top: 10px;
+  margin-right: 5px;
+  right: 10px;
+}
+
+#popBox{
+  display: block;
+  width: 250px;
+  height: 150px;
+  box-shadow: 1px 0px 5px black;
+  border: 2px gray solid;
+  border-radius: 20px;
+  background-color: white;
+  z-index: 1;
+  
+}
+/* #json3{
+    border: 1px black solid;
+    z-index: 2;
+    border-radius : 5px;
+  } */

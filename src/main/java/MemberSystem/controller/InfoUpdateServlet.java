@@ -102,18 +102,17 @@ public class InfoUpdateServlet extends HttpServlet {
 					if (fileName != null && fileName.trim().length() > 0) {
 						sizeInBytes = p.getSize();
 						is = p.getInputStream();
-					}
-					Blob blob = null;
-					if (is != null) {
-						try {
-							blob = GlobalService.fileToBlob(is, sizeInBytes);
-						} catch (SQLException e) {
-							e.printStackTrace();
+						Blob blob = null;
+						if (is != null) {
+							try {
+								blob = GlobalService.fileToBlob(is, sizeInBytes);
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
 						}
-					}
-					mb.setImageFileName(fileName);
-					mb.setMemberImage(blob);
-
+						mb.setImageFileName(fileName);
+						mb.setMemberImage(blob);
+					} 
 				}
 			}
 

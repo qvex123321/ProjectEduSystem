@@ -9,10 +9,10 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import _util.model.ClassBean;
+import _util.model.CourseBean;
+import _util.model.CourseListBean;
 import _util.model.eduProgramSquenceBean;
-import coursesystem.model.ClassBean;
-import coursesystem.model.CourseBean;
-import coursesystem.model.CourseListBean;
 
 public class CourseDaoImpl implements CourseDao {
 
@@ -33,12 +33,12 @@ public class CourseDaoImpl implements CourseDao {
 				+ " values (?, ?, ?, ?, ?, ?)";
 		int n = 0;
 		try (PreparedStatement ps = conn.prepareStatement(sql);) {
-			ps.setString(1, cb.getClassPeriod());
+			ps.setString(1, cb.getClassPeriodId());
 			ps.setDate(2, new Date(cb.getStartDate().getTime()));
 			ps.setDate(3, new Date(cb.getEndDate().getTime()));
 			ps.setString(4, cb.getClassroomId());
 			ps.setString(5, cb.getEduProgramTypeName());
-			ps.setInt(6, cb.getPeriodNumber());
+			ps.setInt(6, cb.getEduProgramNumber());
 			n = ps.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			throw new RuntimeException("(班級期別重複)");
@@ -51,12 +51,12 @@ public class CourseDaoImpl implements CourseDao {
 
 	@Override
 	public int saveCourse(CourseBean course) {
-		String sql = "insert into Course " + " (classroomId, teacherId, courseListId, surveyId, classPeriodId)"
+		String sql = "insert into Course (classroomId, teacherId, courseListId, surveyId, classPeriodId)"
 				+ " values (?, ?, ?, ?, ?)";
 		int n = 0;
 		try (PreparedStatement ps = conn.prepareStatement(sql);) {
 			ps.setString(1, course.getClassroomId());
-			ps.setInt(2, course.getTeachedId());
+			ps.setInt(2, course.getTeacherId());
 			ps.setInt(3, course.getCourseListId());
 			ps.setInt(4, course.getSurveyId());
 			ps.setString(5, course.getClassPeriodId());
@@ -90,7 +90,7 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public List<CourseListBean> getCourseList(String eduProgramTypeName) {
 		List<CourseListBean> beans = new ArrayList<>();
-		String sql = "select * from courseList where eduProgramTypeId = (select EduProgramTypeid from EduProgramType where EduProgramTypeName = ?)";
+		String sql = "select * from courseList where eduProgramTypeId = (select EduProgramTypeid from EduProgramType where EduProgramTypeName = ?) OR eduProgramTypeId = 0";
 		try (PreparedStatement state = conn.prepareStatement(sql);) {
 			state.setString(1, eduProgramTypeName);
 			ResultSet rs = state.executeQuery();
@@ -112,7 +112,7 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public List<eduProgramSquenceBean> getPropram() {
+	public List<eduProgramSquenceBean> getProgram() {
 		List<eduProgramSquenceBean> list = new ArrayList<>();
 		String sql = "SELECT EduProgramTypeName, MAX(EduProgramNumber) AS EduProgramNumber FROM EduProgramSequence GROUP BY eduProgramTypeName";
 		try (PreparedStatement state = conn.prepareStatement(sql);) {

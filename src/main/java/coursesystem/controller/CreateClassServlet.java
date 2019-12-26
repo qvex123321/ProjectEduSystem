@@ -37,12 +37,12 @@ public class CreateClassServlet extends HttpServlet {
 		try {
 			service.saveClass(params);
 			msgOK.put("createClassOK", "班級新增成功");
-			response.sendRedirect("administrator/newClass.jsp");
+			response.sendRedirect("member/administrator/newClass.jsp");
 			return;
 			
 		} catch (Exception e) {
 			errorMsg.put("errorClass", "班級新增失敗"+e.getMessage());
-			RequestDispatcher rd = request.getRequestDispatcher("administrator/newClass.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("member/administrator/newClass.jsp");
 			rd.forward(request, response);
 			return;
 		}

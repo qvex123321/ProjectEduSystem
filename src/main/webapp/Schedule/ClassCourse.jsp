@@ -102,9 +102,8 @@
 					console.log($("#"+eventid).val());
 				}
 
-				calendar.unselect()
+				calendar.unselect();
 			},
-
 			//生一個自訂按鈕
 			customButtons : {
 /*				addEventButton : {

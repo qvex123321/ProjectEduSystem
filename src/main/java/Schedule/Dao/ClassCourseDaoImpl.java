@@ -97,7 +97,7 @@ public class ClassCourseDaoImpl {
 	public List<CourseBean> getCourseBeanList(String classPeriodId) {
 		List<CourseBean> Beans = new ArrayList<CourseBean>();
 		try {
-			String sqlstr = "SELECT courseId,classroomId,teacherId,c.courseListId,surveyId,classPeriodId,courseName,briefInfo,eduProgramTypeId,courseHour FROM Course c INNER JOIN CourseList cl ON c.courseListId = cl.courseListId WHERE classPeriodId=?";
+			String sqlstr = "SELECT courseId,classroomId,teacherId,c.courseListId,surveyId,classPeriodId,courseName,briefInfo,eduProgramTypeId,courseHour,remainingHour FROM Course c INNER JOIN CourseList cl ON c.courseListId = cl.courseListId WHERE classPeriodId=?";
 			PreparedStatement state = conn.prepareStatement(sqlstr);
 			state.setString(1, classPeriodId);
 			ResultSet rs = state.executeQuery();

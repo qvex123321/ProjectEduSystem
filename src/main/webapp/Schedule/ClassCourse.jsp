@@ -13,10 +13,10 @@
 <link href='scr/css/list.css' rel='stylesheet' />
 
 <!-- styles for calendar -->
-<link href='Schedule/scr/css/fullcalendar.css' rel='stylesheet' />
-<link href='Schedule/scr/css/fullcalendar.print.css' rel='stylesheet'
+<link href='scr/css/fullcalendar.css' rel='stylesheet' />
+<link href='scr/css/fullcalendar.print.css' rel='stylesheet'
 	media='print' />
-<link href="calendar/scr/css/cal.css" rel="stylesheet">
+<link href="scr/css/cal.css" rel="stylesheet">
 
 <script src='scr/js/core.js'></script>
 <script src='scr/js/interaction.js'></script>
@@ -96,6 +96,10 @@
 						id : eventid,
 					});
 					flag = false;
+					var beforeCalssHour=$("#"+eventid).val();
+					console.log(beforeCalssHour);
+					$("#"+eventid).val(parseInt(beforeCalssHour)-3);
+					console.log($("#"+eventid).val());
 				}
 
 				calendar.unselect()
@@ -263,8 +267,12 @@
 			$(".fc-left:first:first").prepend($("<select>").attr("id","showCourses"));
 			for ( var i in dataO) {
 				var opt = $("<option>").val(dataO[i].courseId).text(
-						dataO[i].courseName + "(" + dataO[i].courseHour + ")");
+						dataO[i].courseName);
 				$("#showCourses").append(opt);
+				//
+				var cHour = $("<input>").attr("type","hidden").attr("id",dataO[i].courseId).
+										val(dataO[i].courseHour);
+				$("#calendar").append(cHour);
 			}
 		}
 		
@@ -379,14 +387,12 @@ body {
 			<jsp:include page="/fragment/footer.jsp"></jsp:include>
 		</div>
 	</div>
-	</div>
 
 	<jsp:include page="/fragment/scroll-to-top.html"></jsp:include>
 	<jsp:include page="/fragment/logoutModel.jsp"></jsp:include>
 	<jsp:include page="/fragment/jsResource.jsp"></jsp:include>
 
-	<script src='Schedule/scr/js/moment.min.js'></script>
-	<script src='Schedule/scr/js/fullcalendar.js'></script>
+	<!-- <script src='Schedule/scr/js/fullcalendar.js'></script> -->
 	<!--  <div id='classSelectorField'>
 		<p>
 			<b>Choose a class: </b>

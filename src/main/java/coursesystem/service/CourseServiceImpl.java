@@ -14,12 +14,12 @@ import javax.sql.DataSource;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import _util.model.ClassBean;
+import _util.model.CourseBean;
+import _util.model.CourseListBean;
 import _util.model.eduProgramSquenceBean;
 import coursesystem.dao.CourseDao;
 import coursesystem.dao.CourseDaoImpl;
-import coursesystem.model.ClassBean;
-import coursesystem.model.CourseBean;
-import coursesystem.model.CourseListBean;
 
 public class CourseServiceImpl implements CourseService {
 	private CourseDao dao;
@@ -66,8 +66,8 @@ public class CourseServiceImpl implements CourseService {
 			for (CourseListBean clb : courseList) {
 				CourseBean course = new CourseBean(clb);
 				course.setClassroomId(cb.getClassroomId());
-				course.setTeachedId(0);
-				course.setClassPeriodId(cb.getClassPeriod());
+				course.setTeacherId(0);
+				course.setClassPeriodId(cb.getClassPeriodId());
 				course.setSurveyId(-1);
 				n += dao.saveCourse(course);
 			}
@@ -78,7 +78,7 @@ public class CourseServiceImpl implements CourseService {
 			try {
 				programSeq.setEduProgramTypeId(courseList.get(0).getEduProgramTypeId());
 				programSeq.setEduProgramTypeName(cb.getEduProgramTypeName());
-				programSeq.setEduProgramNumber(cb.getPeriodNumber());
+				programSeq.setEduProgramNumber(cb.getEduProgramNumber());
 				dao.saveProgramSeq(programSeq);	
 			} catch (Exception e) {
 				throw new RuntimeException("(尚未建立學程開課列表)");
@@ -112,7 +112,7 @@ public class CourseServiceImpl implements CourseService {
 		getConn();
 		try {
 			dao = new CourseDaoImpl(conn);
-			List<eduProgramSquenceBean> list = dao.getPropram();
+			List<eduProgramSquenceBean> list = dao.getProgram();
 			
 			for (eduProgramSquenceBean b : list) {
 				JSONObject json = new JSONObject();
@@ -132,9 +132,6 @@ public class CourseServiceImpl implements CourseService {
 		}
 		return jsonAry.toString();
 	}
-
-		
-		
 	
 	public ClassBean formatClassBean(String params) {
 		JSONObject obj = new JSONObject(params);
@@ -147,20 +144,20 @@ public class CourseServiceImpl implements CourseService {
 		Date endDate = null;
 		try {
 			startDate = sdf.parse(obj.getString("startDate"));
-			startDate.setDate(startDate.getDate()-1);
+			startDate.setDate(startDate.getDate());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("開始時間有誤:" + e.getMessage());
 		}
 		try {
 			endDate = sdf.parse(obj.getString("endDate"));
-			endDate.setDate(endDate.getDate()-1);
+			endDate.setDate(endDate.getDate());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("結束時間有誤:" + e.getMessage());
 		}
 
-		ClassBean cb = new ClassBean(program + period, program, period, startDate, endDate, classRoom);
+		ClassBean cb = new ClassBean(program + period, startDate, endDate, classRoom, program, period);
 		return cb;
 	}
 

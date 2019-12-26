@@ -8,7 +8,7 @@ public class CourseBean extends CourseListBean implements Serializable {
 	private int courseId;
 	private String classroomId;
 	private int teacherId;
-//	private int surveyId;
+	private int surveyId;
 	private String classPeriodId;
 	private Integer remainingHour;
 
@@ -17,11 +17,13 @@ public class CourseBean extends CourseListBean implements Serializable {
 	}
 
 	public CourseBean(int courseListId, String courseName, int eduProgramTypeId, String briefInfo, int courseHour,
-			int courseId, String classroomId, int teacherId, String classPeriodId, Integer remainingHour) {
+			int courseId, String classroomId, int teacherId, String classPeriodId, int surveyId,
+			Integer remainingHour) {
 		super(courseListId, courseName, eduProgramTypeId, briefInfo, courseHour);
 		this.courseId = courseId;
 		this.classroomId = classroomId;
 		this.teacherId = teacherId;
+		this.surveyId = surveyId;
 		this.classPeriodId = classPeriodId;
 		this.setRemainingHour(remainingHour);
 	}
@@ -33,6 +35,11 @@ public class CourseBean extends CourseListBean implements Serializable {
 //		this.teacherId = teacherId;
 //		this.classPeriodId = classPeriodId;
 //	}
+
+	public CourseBean(CourseListBean clb) {
+		super(clb.getCourseListId(), clb.getCourseName(), clb.getEduProgramTypeId(), clb.getBriefInfo(),
+				clb.getCourseHour());
+	}
 
 	public int getCourseId() {
 		return courseId;
@@ -72,6 +79,14 @@ public class CourseBean extends CourseListBean implements Serializable {
 
 	public void setRemainingHour(Integer remainingHour) {
 		this.remainingHour = remainingHour;
+	}
+
+	public int getSurveyId() {
+		return surveyId;
+	}
+
+	public void setSurveyId(int surveyId) {
+		this.surveyId = surveyId;
 	}
 
 }

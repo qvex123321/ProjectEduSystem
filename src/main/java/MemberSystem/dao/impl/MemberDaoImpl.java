@@ -173,7 +173,6 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return n;
 	}
-
 	// 判斷參數id(會員帳號)是否已經被現有客戶使用，如果是，傳回true，表示此id不能使用，
 	// 否則傳回false，表示此id可使用。
 	@Override
@@ -194,7 +193,6 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return exist;
 	}
-
 	// 由參數 id (會員帳號) 到Member表格中 取得某個會員的所有資料，傳回值為一個MemberBean物件，
 	// 如果找不到對應的會員資料，傳回值為null。
 	@Override

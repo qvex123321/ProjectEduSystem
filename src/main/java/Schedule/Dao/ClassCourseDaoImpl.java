@@ -113,6 +113,7 @@ public class ClassCourseDaoImpl {
 				Bean.setCourseId(rs.getInt("courseId"));
 				Bean.setClassroomId(rs.getString("classroomId"));
 				Bean.setTeacherId(rs.getInt("teacherId"));
+				Bean.setRemainingHour(rs.getInt("remainingHour"));
 				Beans.add(Bean);
 			}
 			rs.close();

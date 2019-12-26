@@ -1,5 +1,7 @@
 package MemberSystem.service;
 
+import javax.servlet.http.Part;
+
 import _util.model.MembersBean;
 
 public interface MemberService {
@@ -12,4 +14,5 @@ public interface MemberService {
 	int updatePwd(String acct, String oldPwd, String newPwd);
 	Integer getPeriodNumberTag(String classPeriod);
 	Integer getSeatNo(String classPeriod);
+	boolean saveMemberByCSV(Part part);
 }

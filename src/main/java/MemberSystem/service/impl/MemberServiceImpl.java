@@ -1,15 +1,25 @@
 package MemberSystem.service.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import MemberSystem.dao.MemberDao;
 import MemberSystem.dao.impl.MemberDaoImpl;
 import MemberSystem.service.MemberService;
+import _util.GlobalService;
 import _util.model.AdminStaffBean;
 import _util.model.MembersBean;
 import _util.model.StudentBean;
@@ -39,7 +49,6 @@ public class MemberServiceImpl implements MemberService {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
-			
 	}
 
 	@Override
@@ -180,6 +189,66 @@ public class MemberServiceImpl implements MemberService {
 		return tag;
 	}
 
-	
+	@Override 
+	public boolean saveMemberByCSV(Part part) {
+		getConn();
+		Date birthDate;
+		Integer privilegeId;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try (
+				InputStream is2 = part.getInputStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(is2, StandardCharsets.UTF_8));
+		)
+		{
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				String item[] = line.split(",");
+				//new Bean，先存進Bean，再透過Dao將Bean存進DB
+				MembersBean mem = new MembersBean();
+//				mem.setMemberId(null);
+				String pwd = GlobalService.getMD5Endocing(GlobalService.encryptString(item[3].trim()));
+				mem.setFirstName(item[0].trim());
+				mem.setLastName(item[1].trim());
+				mem.setAccountName(item[2].trim());
+				mem.setPassword(pwd);
+//				mem.setPassword(item[3].trim());
+				mem.setAddress(item[4].trim());
+				mem.setEmail(item[5].trim());
+				mem.setGender(item[6].trim());
+//				System.out.println(item[6].trim());
+				mem.setTelePhone(item[7].trim());
+//				System.out.println(item[8].trim());
+				mem.setCellPhone(item[8].trim());
+//				System.out.println(item[9].trim());
+				try {
+					birthDate = sdf.parse(item[9].trim());
+//					System.out.println(birthDate);
+					mem.setBirthDate(birthDate);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				privilegeId = Integer.parseInt(item[10].trim());
+				mem.setPrivilegeId(privilegeId);
+				Timestamp ts = new Timestamp(System.currentTimeMillis());
+				mem.setRegisteredTime(ts);
+				mem.setMemberImage(null);
+				mem.setImageFileName(null);
+				privilegeId = Integer.parseInt(item[11].trim());
+				mem.setActiveStatus(privilegeId);
+				dao.saveMember(mem);
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return false;
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
 
 }

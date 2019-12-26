@@ -25,7 +25,7 @@ public class CourseBean extends CourseListBean implements Serializable {
 		this.teacherId = teacherId;
 		this.surveyId = surveyId;
 		this.classPeriodId = classPeriodId;
-		this.setRemainingHour(remainingHour);
+		this.remainingHour = remainingHour;
 	}
 
 //	public CourseBean(int courseId, int classroomId, int teacherId, String classPeriodId) {

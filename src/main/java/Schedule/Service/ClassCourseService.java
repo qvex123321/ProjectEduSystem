@@ -72,13 +72,14 @@ public class ClassCourseService implements IClassCourseService {
 		JSONArray ja = null;
 		try {
 			ClassCourseDaoImpl cci = new ClassCourseDaoImpl(conn);
-			List<CourseBean> courseListBeans = cci.getCourseBeanList(classPeriodId);
+			List<CourseBean> courseBeans = cci.getCourseBeanList(classPeriodId);
 			ja = new JSONArray();
-			for (CourseBean cb : courseListBeans) {
+			for (CourseBean cb : courseBeans) {
 				JSONObject jo = new JSONObject();
 				jo.put("courseId", cb.getCourseId());
 				jo.put("courseName", cb.getCourseName());
 				jo.put("courseHour", cb.getCourseHour());
+				jo.put("remainingHour", cb.getRemainingHour());
 				ja.put(jo);
 			}
 		} catch (Exception e) {

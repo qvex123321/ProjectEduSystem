@@ -31,12 +31,14 @@
 <script>
 	//使用moment.js拿到現在時間，塞進去
 	var today = moment().format('YYYY-MM-DD');
-	var flag = true;
+	var flag = false;
 
 	//calender區
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
-		var eventStartTime, eventEndTime, eventId;
+		var eventStartTime="";
+		var eventEndTime=""; 
+		var eventId;
 
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			plugins : [ 'interaction', 'dayGrid', 'timeGrid' ],
@@ -56,10 +58,10 @@
 			editable : false,
 			eventLimit : true, // allow "more" link when too many events
 
-			//在選擇日期時的動作(1214)
+			//在選擇日期時的動作
 			select : function(arg) {
+				
 				//用來判斷是不是要執行addEvent()
-
 				var title = $('#showCourses :selected').text();
 				var eventid = $('#showCourses :selected').val();
 				var start = arg.startStr + "T" + eventStartTime;
@@ -67,6 +69,7 @@
 				//比對目前events中所有Object的開始時間
 				var nowEvents = calendar.getEvents();
 				// console.log(nowEvents);
+
 				for ( var i in nowEvents) {
 					// flag=true;
 					//如果events陣列中有與現在的時間相同時(使用moment.js來幫忙轉時間格式)
@@ -83,10 +86,16 @@
 							calendar.unselect();
 							break;
 						}
+					//增加課程檢查時數功能
+					}else if($("#"+eventid).val()==0){
+						alert("此課程時數已排滿");
+						flag=false;
+						calendar.unselect();
+						break;
+					}else{
+						flag=true;
 					}
 					
-					flag=true;
-
 				}
 				if (flag) {
 					calendar.addEvent({
@@ -96,10 +105,11 @@
 						id : eventid,
 					});
 					flag = false;
-					var beforeCalssHour=$("#"+eventid).val();
-					console.log(beforeCalssHour);
-					$("#"+eventid).val(parseInt(beforeCalssHour)-3);
-					console.log($("#"+eventid).val());
+					//課程新增成功，扣掉總時數
+					var beforeClassHour=$("#"+eventid).val();
+					//console.log(beforeCalssHour);
+					$("#"+eventid).val(parseInt(beforeClassHour)-3);
+					//console.log($("#"+eventid).val());
 				}
 
 				calendar.unselect();
@@ -128,8 +138,7 @@
 					click : function() {
 						eventStartTime = "09:00:00";
 						eventEndTime = "12:00:00";
-						//這個是課程的Id
-						
+						flag=true;
 						;
 					},
 
@@ -141,7 +150,7 @@
 						eventStartTime = "14:00:00";
 						eventEndTime = "17:00:00";
 						//這個是課程的Id
-						
+						flag=true;
 						;
 					},
 				},
@@ -152,7 +161,7 @@
 						eventStartTime = "18:00:00";
 						eventEndTime = "21:00:00";
 						//這個是課程的Id
-						
+						flag=true;
 						;
 					},
 				},

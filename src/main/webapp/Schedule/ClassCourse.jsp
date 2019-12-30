@@ -286,12 +286,18 @@
 		}
 		
 		$("#showClass").change(function() {
-			//跳確認詢問是否要洗掉
-			
 			//清掉calendar中既有的event
 			calendar.events="";
 			//把已經存在的課表拉進來
-			
+			calendar.eventSources=$.ajax({
+				url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
+				type : "GET",
+				//error : alert("ERROR"),
+				success : function(data) {
+//					console.log(typeof(JSON.parse(data)));
+					events : JSON.parse(data) 
+				}
+			});
 			//如果class有時數，取代預設時數
 			
 			

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -58,24 +59,13 @@
 					type : "GET",
 					//error : alert("ERROR"),
 					success : function(data) {
-						console.log(typeof(JSON.parse(data)));
+//						console.log(typeof(JSON.parse(data)));
 						$('#calendar').fullCalendar({
 							events : JSON.parse(data) ,
 						});
 					}
 				})
 			});
-//			$.ajax({
-//				url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
-//				type : "GET",
-				//error : alert("ERROR"),
-//				success : function(data) {
-//					console.log(typeof(JSON.parse(data)));
-//					$('#calendar').fullCalendar({
-//						events : JSON.parse(data) ,
-//					});
-//				}
-//			});
 			
 			
 		});

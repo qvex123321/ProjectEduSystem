@@ -53,19 +53,29 @@
 				navLinks : false, // can click day/week names to navigate views
 				editable : false,
 				eventLimit : false, // allow "more" link when too many events
-//				events :
+				eventSources : $.ajax({
+					url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
+					type : "GET",
+					//error : alert("ERROR"),
+					success : function(data) {
+						console.log(typeof(JSON.parse(data)));
+						$('#calendar').fullCalendar({
+							events : JSON.parse(data) ,
+						});
+					}
+				})
 			});
-			$.ajax({
-				url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
-				type : "GET",
+//			$.ajax({
+//				url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
+//				type : "GET",
 				//error : alert("ERROR"),
-				success : function(data) {
-					console.log(data);
-					$('#calendar').fullCalendar({
-						events : data ,
-					});
-				}
-			});
+//				success : function(data) {
+//					console.log(typeof(JSON.parse(data)));
+//					$('#calendar').fullCalendar({
+//						events : JSON.parse(data) ,
+//					});
+//				}
+//			});
 			
 			
 		});

@@ -192,10 +192,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override 
 	public boolean saveMemberByCSV(Part part) {
 		getConn();
+		dao  = new MemberDaoImpl(conn);
 		Date birthDate;
 		Integer privilegeId;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 		try (
 				InputStream is2 = part.getInputStream();
 				BufferedReader br = new BufferedReader(new InputStreamReader(is2, StandardCharsets.UTF_8));

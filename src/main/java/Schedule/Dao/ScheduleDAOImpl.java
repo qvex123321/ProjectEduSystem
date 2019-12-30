@@ -75,12 +75,9 @@ public class ScheduleDAOImpl {
 				Bean.setClassPeriodId(rs.getString("classPeriodId"));
 				Bean.setYear(rs.getInt("year"));
 				Bean.setMonth(rs.getInt("month"));
-//				Bean.setDailyScheduleM(rs.getString("dailyScheduleM"));
-				System.out.println(rs.getString("dailyScheduleM"));
-//				Bean.setDailyScheduleAN(rs.getString("dailyScheduleAN"));
-				System.out.println(rs.getString("dailyScheduleAN"));
-//				Bean.setDailyScheduleN(rs.getString("dailyScheduleN"));
-				System.out.println(rs.getString("dailyScheduleN"));
+				Bean.setDailyScheduleM(rs.getString("dailyScheduleM"));
+				Bean.setDailyScheduleAN(rs.getString("dailyScheduleAN"));
+				Bean.setDailyScheduleN(rs.getString("dailyScheduleN"));
 //				System.out.println(Bean.toString());
 			}
 			rs.close();

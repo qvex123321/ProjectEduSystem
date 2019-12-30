@@ -109,8 +109,8 @@
   <li class="nav-item">
     <!-- <a class="nav-link" href="${pageContext.request.contextPath}/calendar/calendar.jsp">-->
 
-    <a class="nav-link" href="../../Schedule?classPeriodId=${LoginO2K.classPeriodId}">
-      
+<%--     <a class="nav-link" href="../../Schedule?classPeriodId=${LoginO2K.classPeriodId}"> --%>
+    <a class="nav-link" href="../../Schedule/calendar.jsp">  
       <i class="fas fa-fw fa-table"></i>
       <span>行事曆</span></a>
   </li>

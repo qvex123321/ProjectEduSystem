@@ -31,7 +31,6 @@ public class GetSchedule extends HttpServlet {
 		String teacherId = request.getParameter("teacherId");
 		String classPeriodId = request.getParameter("classPeriodId");
 		// 丟給Service處理
-//		TestService ts = new TestService();
 		IScheduleService Ss = new ScheduleService();
 //		ts.testTeacherBean();
 //		ts.testStudentBean();
@@ -47,10 +46,13 @@ public class GetSchedule extends HttpServlet {
 			e.printStackTrace();
 		}
 		//將回傳的JSONString傳到JSP
-		request.setAttribute("JSONString", JS);
+//		request.setAttribute("JSONString", JS);
 //		RequestDispatcher rd = request.getRequestDispatcher("/Schedule/Schedule.jsp");
-		RequestDispatcher rd = request.getRequestDispatcher("/Schedule/calendar.jsp");
-		rd.forward(request, response);
+//		RequestDispatcher rd = request.getRequestDispatcher("/Schedule/calendar.jsp");
+//		rd.forward(request, response);
+// 將回傳的JSONString傳到AJAX
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().print(JS);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

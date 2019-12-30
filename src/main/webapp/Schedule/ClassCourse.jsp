@@ -32,8 +32,9 @@
 	//使用moment.js拿到現在時間，塞進去
 	var today = moment().format('YYYY-MM-DD');
 	var flag = false;
-
+	calendar();
 	//calender區
+	function calendar(){
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar');
 		var eventStartTime="";
@@ -285,11 +286,21 @@
 		}
 		
 		$("#showClass").change(function() {
+			//跳確認詢問是否要洗掉
+			
+			//清掉calendar中既有的event
+			calendar.events="";
+			//把已經存在的課表拉進來
+			
+			//如果class有時數，取代預設時數
+			
+			
 			var id = $("#showClass :selected").text();
 			$.ajax({
 				url : "../GetCourses?classPeriodId=" + id,
 				type : "GET",
 				success : function(data) {
+					
 					getCourseList(data);
 					setCourseListContent(data);
 					//呼叫外面的ajax
@@ -306,6 +317,7 @@
 		});
 		
 	});
+	};
 </script>
 <style>
 html {
@@ -427,6 +439,7 @@ body {
 			var dataO = JSON.parse(data);
 			//console.log(typeof (dataO));
 			$("#showClass").html("");
+			$("#showClass").append($("<option>").text("--請選擇--"));
 			for ( var i in dataO) {
 				var opt = $("<option>").val(dataO[i].eduProgramTypeName).text(
 						dataO[i].ClasPeriodId);

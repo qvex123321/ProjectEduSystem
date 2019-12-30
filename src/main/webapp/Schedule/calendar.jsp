@@ -6,11 +6,10 @@
 <head>
 	<jsp:include page="/fragment/headResource.jsp"/>
 <!-- styles for calendar -->
-<link href='Schedule/scr/css/fullcalendar.css' rel='stylesheet' />
-<link href='Schedule/scr/css/fullcalendar.print.css' rel='stylesheet'
-	media='print' />
+<link href='scr/css/fullcalendar.css' rel='stylesheet' />
+<link href='scr/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 
-<link href="Schedule/scr/css/cal.css" rel="stylesheet">
+<link href="scr/css/cal.css" rel="stylesheet">
 
 <title>MyModel</title>
 
@@ -37,12 +36,13 @@
 	<jsp:include page="/fragment/logoutModel.jsp"></jsp:include>
 	<jsp:include page="/fragment/jsResource.jsp"></jsp:include>
 	
-	<script src='Schedule/scr/js/moment.min.js'></script>
-	<script src='Schedule/scr/js/fullcalendar.js'></script>
+	<script src='scr/js/moment.min.js'></script>
+	<script src='scr/js/fullcalendar.js'></script>
 	<!-- <script src="scr/js/cal.js"></script> -->
 	<script>
 		var today = moment().format('YYYY-MM-DD');
-		$(document).ready(function() {
+		//$(document).ready(function() {
+		document.addEventListener('DOMContentLoaded', function() {
 			$('#calendar').fullCalendar({
 				header : {
 					left : 'prev,next /*today*/',
@@ -53,11 +53,23 @@
 				navLinks : false, // can click day/week names to navigate views
 				editable : false,
 				eventLimit : false, // allow "more" link when too many events
-				events :
-				<%=request.getAttribute("JSONString")%>
+//				events :
 			});
+			$.ajax({
+				url : "../Schedule?classPeriodId=${LoginO2K.classPeriodId}",
+				type : "GET",
+				//error : alert("ERROR"),
+				success : function(data) {
+					console.log(data);
+					$('#calendar').fullCalendar({
+						events : data ,
+					});
+				}
+			});
+			
+			
 		});
-		console.log(<%=request.getAttribute("JSONString")%>);
+		
 	</script>
 	<script>
 		//按鈕點擊隱藏另外一個(更動js檔的14792)
